@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import SectionHeader from '../components/SectionHeader'
-import { ExternalLink, Code2, X, Activity, Cpu, ArrowUpRight } from 'lucide-react'
+import { X, ExternalLink, Cpu, Target, Award, ArrowUpRight } from 'lucide-react'
+import ScrollReveal from '../components/ScrollReveal'
+import MagneticButton from '../components/MagneticButton'
 
 interface Project {
   title: string
@@ -40,7 +41,7 @@ export default function Projects() {
       caseStudy: {
         overview: 'Manual evaluation of decubitus and diabetic ulcers is error-prone. By automating boundary detection, this research enables reproducible wound mapping across multiple follow-up visits.',
         architecture: [
-          'Pre-processing: Contrast adjustment via CLAHE and image resize resizing to 256x256.',
+          'Pre-processing: Contrast adjustment via CLAHE and image resizing to 256x256.',
           'Model Structure: U-Net encoder utilizing ResNet-34 backbones pre-trained on ImageNet.',
           'Loss Function: Combined Binary Cross Entropy (BCE) and Dice Loss to counter class imbalance (ulcer regions cover <15% of image area).'
         ],
@@ -129,282 +130,209 @@ export default function Projects() {
         ],
         nextSteps: 'Conducting clinical safety studies with doctor panels to evaluate generative output validity.'
       }
-    },
+    }
   ]
 
-  const getStatusColor = (status: Project['status']) => {
-    switch (status) {
-      case 'Production':
-        return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20'
-      case 'Active Development':
-        return 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20'
-      case 'Research Prototype':
-        return 'bg-teal-500/10 text-teal-700 dark:text-teal-400 border-teal-500/20'
-      case 'In Pipeline':
-        return 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/20'
-    }
-  }
-
   return (
-    <section id="projects" className="py-20 bg-slate-50 dark:bg-navy-950 border-b border-slate-200/40 dark:border-navy-900/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <SectionHeader
-          title="Featured Projects"
-          subtitle="Translating biomedical informatics concepts and clinical insights into working software solutions."
-          center
-        />
+    <section id="projects" className="section-padding bg-void relative overflow-hidden border-t border-ink-900/60">
+      {/* Glow effect */}
+      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-cyan-glow/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {projectsList.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`p-6 md:p-8 rounded-2xl bg-white dark:bg-navy-900 border border-slate-200/60 dark:border-navy-900/80 shadow-sm hover:shadow-md hover:border-teal-500/20 dark:hover:border-teal-500/10 transition-all duration-300 text-left flex flex-col justify-between relative overflow-hidden group ${
-                project.isFeature ? 'ring-2 ring-teal-500/20' : ''
-              }`}
-            >
-              {/* Featured Badge */}
-              {project.isFeature && (
-                <div className="absolute top-0 right-0 bg-teal-600 text-white text-[9px] uppercase font-bold tracking-widest px-3 py-1 rounded-bl-lg">
-                  Featured Research
+      <div className="container-narrow">
+        <ScrollReveal direction="up">
+          <span className="text-section-label">03 / CASE STUDIES</span>
+          <h2 className="text-display-lg text-white mt-3 mb-24 max-w-2xl">
+            Selected Clinical AI &amp; Biomedical Informatics Projects.
+          </h2>
+        </ScrollReveal>
+
+        {/* Storytelling Project Layout (Alternating) */}
+        <div className="space-y-32">
+          {projectsList.map((project, index) => {
+            const isEven = index % 2 === 0
+            return (
+              <div key={project.title} className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                {/* Visual Accent Box or Project Number */}
+                <div className={`lg:col-span-4 flex flex-col justify-center order-2 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                  <ScrollReveal direction={isEven ? 'left' : 'right'} delay={0.1}>
+                    <div className="text-[120px] font-display font-extrabold text-ink-900 leading-none select-none">
+                      0{index + 1}
+                    </div>
+                    <div className="mt-4 flex items-center space-x-2">
+                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-cyan-glow animate-pulse" />
+                      <span className="text-[10px] font-mono tracking-widest text-ink-500 uppercase">
+                        {project.status}
+                      </span>
+                    </div>
+                  </ScrollReveal>
                 </div>
-              )}
 
-              <div className="space-y-4">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${getStatusColor(project.status)}`}>
-                    {project.status}
-                  </span>
-                  <span className="text-xs font-semibold text-slate-400 dark:text-navy-400">
-                    {project.tagline}
-                  </span>
-                </div>
-                
-                <h3 className="text-2xl font-bold text-navy-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-                  {project.title}
-                </h3>
+                {/* Narrative Details */}
+                <div className={`lg:col-span-8 text-left space-y-6 order-1 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                  <ScrollReveal direction="up" delay={0.2}>
+                    <h3 className="text-display-sm text-white tracking-tight">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs font-mono text-cyan-glow tracking-wider">
+                      {project.tagline}
+                    </p>
+                  </ScrollReveal>
 
-                {/* Problem & Solution representation */}
-                <div className="space-y-3 pt-2">
-                  <div>
-                    <span className="text-[10px] font-bold text-red-500 uppercase tracking-widest block">The Problem</span>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">
-                      {project.problem}
+                  {/* Problem & Solution block */}
+                  <ScrollReveal direction="up" delay={0.3} className="space-y-4 text-body font-light">
+                    <p>
+                      <strong className="text-white font-medium">The Problem:</strong> {project.problem}
                     </p>
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-widest block">The Solution</span>
-                    <p className="text-sm text-slate-700 dark:text-slate-350 mt-0.5 leading-relaxed font-medium">
-                      {project.solution}
+                    <p>
+                      <strong className="text-white font-medium">The Informatics Solution:</strong> {project.solution}
                     </p>
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block">Clinical Impact</span>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">
-                      {project.impact}
+                    <p className="border-l-2 border-cyan-glow/30 pl-4 py-1 text-ink-300 italic">
+                      <strong className="text-cyan-glow font-medium not-italic">Clinical &amp; Operational Impact:</strong> {project.impact}
                     </p>
-                  </div>
+                  </ScrollReveal>
+
+                  {/* Tech stack */}
+                  <ScrollReveal direction="up" delay={0.4}>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((t) => (
+                        <span key={t} className="text-[10px] font-mono px-2.5 py-1 rounded bg-ink-900 border border-ink-850 text-ink-300">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </ScrollReveal>
+
+                  {/* Button Trigger */}
+                  <ScrollReveal direction="up" delay={0.45}>
+                    <div className="pt-2">
+                      <MagneticButton onClick={() => setSelectedProject(project)} variant="secondary">
+                        View Case Study
+                      </MagneticButton>
+                    </div>
+                  </ScrollReveal>
                 </div>
               </div>
+            )
+          })}
+        </div>
+      </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-100 dark:border-navy-800">
-                {/* Tech tags */}
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-navy-800/60 text-slate-600 dark:text-slate-300 border border-slate-200/20"
-                    >
-                      {t}
-                    </span>
-                  ))}
+      {/* Case Study Full Screen Modal (AnimatePresence) */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 overflow-y-auto bg-void/90 backdrop-blur-md flex justify-center p-4 sm:p-10 no-print"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 30 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="w-full max-w-4xl glass rounded-2xl overflow-hidden my-auto p-8 sm:p-12 relative text-left"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-6 right-6 p-2 rounded-lg bg-ink-900 border border-ink-800 hover:border-cyan-glow text-ink-400 hover:text-white transition-colors cursor-pointer"
+                aria-label="Close Case Study"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="space-y-8">
+                {/* Header */}
+                <div>
+                  <span className="text-[10px] font-mono text-cyan-glow tracking-widest uppercase">
+                    {selectedProject.tagline}
+                  </span>
+                  <h3 className="text-display-md text-white mt-1 tracking-tight">
+                    {selectedProject.title}
+                  </h3>
                 </div>
 
-                {/* Action buttons */}
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className="inline-flex items-center text-xs font-bold text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 transition-colors cursor-pointer group/link"
-                  >
-                    View Case Study
-                    <ArrowUpRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                  </button>
+                {/* Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-4">
+                  {/* Left Column: Overview & Steps */}
+                  <div className="md:col-span-7 space-y-6">
+                    <div>
+                      <h4 className="text-xs font-mono font-bold tracking-wider text-white uppercase mb-2 flex items-center">
+                        <Target className="h-4 w-4 mr-2 text-cyan-glow" />
+                        Project Overview
+                      </h4>
+                      <p className="text-xs sm:text-sm text-ink-300 font-light leading-relaxed">
+                        {selectedProject.caseStudy.overview}
+                      </p>
+                    </div>
 
-                  <div className="flex items-center space-x-4">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-xs font-semibold text-slate-500 hover:text-navy-900 dark:text-navy-450 dark:hover:text-white transition-colors"
-                    >
-                      <svg
-                        className="h-4 w-4 mr-1.5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                        <path d="M9 18c-4.51 2-5-2-7-2" />
-                      </svg>
-                      GitHub
-                    </a>
-                    
-                    {project.status !== 'In Pipeline' ? (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-xs font-semibold text-slate-500 hover:text-navy-900 dark:text-navy-450 dark:hover:text-white transition-colors"
-                      >
-                        <ExternalLink className="h-4 w-4 mr-1.5" />
-                        Demo
-                      </a>
-                    ) : (
-                      <span className="inline-flex items-center text-xs font-semibold text-slate-400 dark:text-navy-600 cursor-not-allowed">
-                        <Code2 className="h-4 w-4 mr-1.5" />
-                        Queue
-                      </span>
-                    )}
+                    <div>
+                      <h4 className="text-xs font-mono font-bold tracking-wider text-white uppercase mb-3 flex items-center">
+                        <Cpu className="h-4 w-4 mr-2 text-warm-400" />
+                        Implementation Architecture
+                      </h4>
+                      <ul className="space-y-3">
+                        {selectedProject.caseStudy.architecture.map((step, idx) => (
+                          <li key={idx} className="text-xs text-ink-450 leading-relaxed pl-3 border-l border-ink-800">
+                            {step}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
+
+                  {/* Right Column: Outcomes & Metrics */}
+                  <div className="md:col-span-5 space-y-6">
+                    <div className="p-5 rounded-xl bg-ink-900/60 border border-ink-800 space-y-4">
+                      <h4 className="text-xs font-mono font-bold tracking-wider text-white uppercase flex items-center">
+                        <Award className="h-4 w-4 mr-2 text-cyan-glow" />
+                        Validation Results
+                      </h4>
+                      <ul className="space-y-2">
+                        {selectedProject.caseStudy.results.map((res, idx) => (
+                          <li key={idx} className="text-xs text-ink-300 list-disc list-inside">
+                            {res}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pl-4 border-l-2 border-warm-400/50">
+                      <h4 className="text-[10px] font-mono tracking-widest text-ink-500 uppercase mb-1">
+                        Future Directions
+                      </h4>
+                      <p className="text-xs text-ink-400 leading-relaxed italic">
+                        {selectedProject.caseStudy.nextSteps}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer buttons */}
+                <div className="pt-6 border-t border-ink-850 flex flex-wrap gap-4">
+                  <a
+                    href={selectedProject.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-xs font-mono uppercase tracking-widest text-ink-400 hover:text-cyan-glow transition-colors cursor-pointer"
+                  >
+                    Source Code <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
+                  </a>
+                  <a
+                    href={selectedProject.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-xs font-mono uppercase tracking-widest text-cyan-glow hover:text-cyan-300 transition-colors cursor-pointer"
+                  >
+                    Verify Prototype <ExternalLink className="ml-1 h-3.5 w-3.5" />
+                  </a>
                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
-
-        {/* Case Study Modal */}
-        <AnimatePresence>
-          {selectedProject && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 no-print">
-              {/* Backdrop */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedProject(null)}
-                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-              />
-
-              {/* Modal Container */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 15 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-                className="relative bg-white dark:bg-navy-900 w-full max-w-3xl max-h-[85vh] rounded-2xl overflow-y-auto shadow-2xl border border-slate-200 dark:border-navy-800 z-10 p-6 md:p-8 text-left"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="modal-title"
-              >
-                {/* Close Button */}
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-navy-850 transition-colors cursor-pointer"
-                  aria-label="Close Case Study"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-
-                {/* Modal Content */}
-                <div className="space-y-6">
-                  <div>
-                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${getStatusColor(selectedProject.status)}`}>
-                      {selectedProject.status}
-                    </span>
-                    <h3 id="modal-title" className="text-2xl md:text-3xl font-display font-extrabold text-navy-900 dark:text-white mt-3">
-                      {selectedProject.title}
-                    </h3>
-                    <p className="text-sm font-semibold text-teal-600 dark:text-teal-400 mt-1">
-                      {selectedProject.tagline}
-                    </p>
-                  </div>
-
-                  {/* Summary/Overview */}
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold text-navy-950 dark:text-slate-300 uppercase tracking-widest border-b border-slate-100 dark:border-navy-850 pb-1">
-                      Research Overview
-                    </h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-350 leading-relaxed">
-                      {selectedProject.caseStudy.overview}
-                    </p>
-                  </div>
-
-                  {/* Implementation Architecture */}
-                  <div className="space-y-3">
-                    <h4 className="text-xs font-bold text-navy-950 dark:text-slate-300 uppercase tracking-widest border-b border-slate-100 dark:border-navy-850 pb-1 flex items-center">
-                      <Cpu className="h-4 w-4 mr-1.5 text-teal-500" />
-                      Technical Architecture
-                    </h4>
-                    <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                      {selectedProject.caseStudy.architecture.map((step, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <span className="text-teal-500 mr-2.5 font-bold">{idx + 1}.</span>
-                          <span>{step}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Validation Results */}
-                  <div className="space-y-3">
-                    <h4 className="text-xs font-bold text-navy-950 dark:text-slate-300 uppercase tracking-widest border-b border-slate-100 dark:border-navy-850 pb-1 flex items-center">
-                      <Activity className="h-4 w-4 mr-1.5 text-cyan-500" />
-                      Validation Results & Metrics
-                    </h4>
-                    <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                      {selectedProject.caseStudy.results.map((result, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <span className="text-cyan-500 mr-2.5 font-extrabold">&bull;</span>
-                          <span>{result}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Future Scope */}
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold text-navy-950 dark:text-slate-300 uppercase tracking-widest border-b border-slate-100 dark:border-navy-850 pb-1">
-                      Future Directions & Clinical Scope
-                    </h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-450 leading-relaxed">
-                      {selectedProject.caseStudy.nextSteps}
-                    </p>
-                  </div>
-
-                  {/* Modal Footer / CTAs */}
-                  <div className="flex items-center justify-end space-x-4 border-t border-slate-100 dark:border-navy-800 pt-4 mt-8">
-                    <a
-                      href={selectedProject.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-4 py-2 text-xs font-semibold rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-navy-850 dark:hover:bg-navy-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-navy-800 transition-colors"
-                    >
-                      Source Code
-                    </a>
-                    {selectedProject.status !== 'In Pipeline' && (
-                      <a
-                        href={selectedProject.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-4 py-2 text-xs font-semibold rounded-lg bg-teal-600 hover:bg-teal-700 text-white transition-colors"
-                      >
-                        Launch Demo
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

@@ -9,12 +9,10 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: 'About', href: '#about' },
-  { label: 'Education', href: '#education' },
+  { label: 'Journey', href: '#journey' },
   { label: 'Projects', href: '#projects' },
   { label: 'Research', href: '#research' },
-  { label: 'Blog', href: '#blog' },
-  { label: 'Certifications', href: '#certifications' },
-  { label: 'Experience', href: '#experience' },
+  { label: 'Credentials', href: '#certifications' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -25,13 +23,9 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
+      setScrolled(window.scrollY > 20)
 
-      // Track active section for highlight
+      // Highlight active section on scroll
       const scrollPosition = window.scrollY + 120
       for (const item of navItems) {
         const el = document.querySelector(item.href)
@@ -54,7 +48,7 @@ export default function Navbar() {
     setIsOpen(false)
     const el = document.querySelector(href)
     if (el) {
-      const top = (el as HTMLElement).offsetTop - 75 // offset for sticky navbar
+      const top = (el as HTMLElement).offsetTop - 75
       window.scrollTo({
         top: top,
         behavior: 'smooth',
@@ -64,78 +58,90 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 no-print ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 no-print ${
         scrolled
-          ? 'bg-white/80 dark:bg-navy-950/80 backdrop-blur-md shadow-md border-b border-slate-200/50 dark:border-navy-900/50 py-3'
-          : 'bg-transparent py-5'
+          ? 'bg-void/75 border-b border-ink-900/50 backdrop-blur-md py-3 shadow-[0_4px_30px_rgba(0,0,0,0.4)]'
+          : 'bg-transparent py-6'
       }`}
       aria-label="Main Navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
-          {/* Logo / Title */}
+        <div className="flex items-center justify-between h-10">
+          {/* Brand Logo / Monogram */}
           <div className="flex-shrink-0">
             <a
               href="#about"
               onClick={(e) => handleLinkClick(e, '#about')}
-              className="text-lg md:text-xl font-display font-bold tracking-tight text-navy-900 dark:text-white hover:text-teal-600 dark:hover:text-teal-400 transition-colors focus-visible:ring-2"
+              className="group text-left block focus-visible:ring-1"
             >
-              Dr. Enosh A. Paulson
-              <span className="text-xs block font-sans font-medium text-slate-500 dark:text-navy-450">
-                Healthcare AI & Informatics
-              </span>
+              <div className="flex items-center space-x-3">
+                <div className="h-8 w-8 rounded-full border border-cyan-glow/20 flex items-center justify-center text-xs font-mono font-bold text-white group-hover:border-cyan-glow transition-all duration-300">
+                  EP
+                </div>
+                <div>
+                  <span className="text-sm font-display font-bold tracking-tight text-white block">
+                    Dr. Enosh A. Paulson
+                  </span>
+                  <span className="text-[9px] font-mono tracking-wider text-cyan-glow block uppercase">
+                    Healthcare AI &amp; Informatics
+                  </span>
+                </div>
+              </div>
             </a>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-6">
+          {/* Desktop Navigation links */}
+          <div className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleLinkClick(e, item.href)}
-                className={`text-xs font-semibold uppercase tracking-wider transition-colors hover:text-teal-600 dark:hover:text-teal-400 focus-visible:ring-2 px-1 py-1.5 rounded ${
-                  activeSection === item.href
-                    ? 'text-teal-600 dark:text-teal-400 font-bold'
-                    : 'text-slate-500 dark:text-slate-350'
+                className={`text-[10px] font-mono uppercase tracking-widest transition-colors hover:text-cyan-glow focus-visible:ring-1 px-1 py-1 rounded relative ${
+                  activeSection === item.href || (item.href === '#about' && activeSection === '')
+                    ? 'text-cyan-glow font-semibold'
+                    : 'text-ink-400'
                 }`}
               >
                 {item.label}
+                {(activeSection === item.href || (item.href === '#about' && activeSection === '')) && (
+                  <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-[3px] w-[3px] rounded-full bg-cyan-glow" />
+                )}
               </a>
             ))}
-            <div className="pl-2 border-l border-slate-200 dark:border-navy-800">
+            <div className="pl-4 border-l border-ink-900">
               <DarkModeToggle />
             </div>
           </div>
 
-          {/* Mobile Menu Buttons */}
+          {/* Mobile buttons */}
           <div className="flex items-center space-x-3 lg:hidden">
             <DarkModeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-slate-500 dark:text-slate-300 hover:text-navy-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-navy-800 focus:outline-none focus-visible:ring-2 cursor-pointer"
+              className="inline-flex items-center justify-center p-2 rounded-md text-ink-400 hover:text-white focus:outline-none focus-visible:ring-1 cursor-pointer"
               aria-expanded={isOpen}
               aria-label="Toggle menu"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile Drawer Menu (Cinematic Overlay) */}
       {isOpen && (
-        <div className="lg:hidden bg-white/95 dark:bg-navy-950/95 backdrop-blur-md border-b border-slate-200 dark:border-navy-900 transition-all duration-300">
-          <div className="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+        <div className="lg:hidden fixed inset-0 top-[60px] bg-void/98 backdrop-blur-lg z-40 transition-all duration-300">
+          <div className="px-6 py-12 space-y-6 flex flex-col justify-center h-[80%] text-left">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleLinkClick(e, item.href)}
-                className={`block px-3 py-2.5 rounded-md text-base font-semibold uppercase tracking-wider transition-colors ${
+                className={`block text-2xl font-display font-medium tracking-tight border-b border-ink-900/50 pb-2 ${
                   activeSection === item.href
-                    ? 'bg-teal-50 dark:bg-navy-900/50 text-teal-600 dark:text-teal-400 font-bold'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-navy-900/35'
+                    ? 'text-cyan-glow font-semibold'
+                    : 'text-ink-300'
                 }`}
               >
                 {item.label}

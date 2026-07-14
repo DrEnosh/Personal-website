@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import SectionHeader from '../components/SectionHeader'
 import { Mail, Send, CheckCircle, Copy, Check, FileDown } from 'lucide-react'
+import ScrollReveal from '../components/ScrollReveal'
+import MagneticButton from '../components/MagneticButton'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -68,92 +69,85 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-slate-50 dark:bg-navy-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <SectionHeader
-          title="Connect"
-          subtitle="Get in touch to discuss clinical machine learning, audit pipelines, or informatics collaborations."
-          center
-        />
+    <section id="contact" className="section-padding bg-void relative overflow-hidden border-t border-ink-900/60">
+      {/* Accent glow */}
+      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-cyan-glow/5 rounded-full blur-[140px] pointer-events-none" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
-          {/* Info Card */}
-          <div className="lg:col-span-5 text-left space-y-6">
-            <div className="bg-white dark:bg-navy-900 p-8 rounded-2xl border border-slate-200/50 dark:border-navy-900 shadow-sm space-y-6">
-              <h3 className="text-xl font-bold text-navy-900 dark:text-white">
-                Contact Details
+      <div className="container-narrow">
+        <ScrollReveal direction="up">
+          <span className="text-section-label">06 / CONNECTION</span>
+          <h2 className="text-display-lg text-white mt-3 mb-20 max-w-3xl">
+            Let's build something meaningful.
+          </h2>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          {/* Details Card */}
+          <div className="lg:col-span-5 text-left space-y-8">
+            <ScrollReveal direction="up" delay={0.1} className="space-y-6">
+              <h3 className="text-display-sm text-white font-medium">
+                Dossier &amp; Inbox
               </h3>
-              <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="text-xs sm:text-sm text-ink-400 leading-relaxed font-light">
                 I speak the language of both medical professionals and software engineers. Let’s connect to build clinically compliant AI systems.
               </p>
 
               <div className="space-y-4">
                 {/* Copyable Email Node */}
-                <div className="flex flex-col space-y-1.5 p-4 rounded-xl bg-slate-50 dark:bg-navy-850 border border-slate-100 dark:border-navy-800">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2.5">
-                      <div className="p-2 rounded bg-white dark:bg-navy-900 text-teal-600 dark:text-teal-400 border border-slate-100 dark:border-navy-800">
-                        <Mail className="h-4.5 w-4.5" />
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-bold text-slate-400 dark:text-navy-500 block uppercase">EMAIL</span>
-                        <span className="text-sm font-semibold break-all text-slate-700 dark:text-slate-250">{emailAddress}</span>
-                      </div>
+                <div className="p-5 rounded-xl border border-ink-900 bg-ink-900/10 flex items-center justify-between">
+                  <div className="flex items-center space-x-3.5">
+                    <div className="p-2 rounded bg-ink-900 border border-ink-850 text-cyan-glow">
+                      <Mail className="h-4.5 w-4.5" />
                     </div>
-
-                    <button
-                      onClick={handleCopyEmail}
-                      className="p-1.5 rounded bg-white dark:bg-navy-900 hover:bg-slate-100 dark:hover:bg-navy-800 border border-slate-200 dark:border-navy-800 text-slate-500 dark:text-slate-400 transition-colors cursor-pointer"
-                      aria-label="Copy email address"
-                      title="Copy email to clipboard"
-                    >
-                      {emailCopied ? (
-                        <Check className="h-4 w-4 text-emerald-500" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </button>
+                    <div>
+                      <span className="text-[9px] font-mono text-ink-500 block uppercase tracking-wider">EMAIL</span>
+                      <span className="text-xs sm:text-sm font-semibold text-white break-all">{emailAddress}</span>
+                    </div>
                   </div>
+
+                  <button
+                    onClick={handleCopyEmail}
+                    className="p-2 rounded bg-ink-900 hover:bg-ink-850 border border-ink-800 text-ink-400 hover:text-white transition-colors cursor-pointer"
+                    aria-label="Copy email address"
+                    title="Copy email to clipboard"
+                  >
+                    {emailCopied ? (
+                      <Check className="h-4 w-4 text-success" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </button>
                 </div>
 
-                {/* Resume Download Node */}
+                {/* Print CV Node */}
                 <button
                   onClick={() => window.print()}
-                  className="w-full flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-navy-850 border border-slate-100 dark:border-navy-800 text-left hover:border-teal-500/25 dark:hover:border-teal-500/20 transition-colors group cursor-pointer"
+                  className="w-full flex items-center justify-between p-5 rounded-xl border border-ink-900 bg-ink-900/10 text-left hover:border-cyan-glow/20 transition-all duration-300 group cursor-pointer"
                 >
-                  <div className="flex items-center space-x-2.5">
-                    <div className="p-2 rounded bg-white dark:bg-navy-900 text-teal-600 dark:text-teal-400 border border-slate-100 dark:border-navy-800">
+                  <div className="flex items-center space-x-3.5">
+                    <div className="p-2 rounded bg-ink-900 border border-ink-850 text-cyan-glow">
                       <FileDown className="h-4.5 w-4.5" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 dark:text-navy-500 block uppercase">RESUME</span>
-                      <span className="text-sm font-semibold text-slate-700 dark:text-slate-250">Printable CV Profile</span>
+                      <span className="text-[9px] font-mono text-ink-500 block uppercase tracking-wider">RESUME</span>
+                      <span className="text-xs sm:text-sm font-semibold text-white">Printable CV Profile</span>
                     </div>
                   </div>
-                  <span className="text-xs font-bold text-teal-600 dark:text-teal-400 group-hover:translate-x-0.5 transition-transform">
-                    Print &darr;
+                  <span className="text-[10px] font-mono tracking-widest text-cyan-glow uppercase group-hover:translate-x-1 transition-transform">
+                    Print &rarr;
                   </span>
                 </button>
               </div>
 
               {/* Social Channels */}
-              <div className="pt-6 border-t border-slate-100 dark:border-navy-800 flex items-center space-x-4">
+              <div className="pt-6 border-t border-ink-900 flex items-center space-x-6 text-xs font-mono">
                 <a
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-xs font-semibold text-slate-500 hover:text-teal-600 dark:text-navy-450 dark:hover:text-teal-400 transition-colors"
+                  className="flex items-center space-x-2 text-ink-500 hover:text-cyan-glow transition-colors"
                 >
-                  <svg
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none; currentColor"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                     <rect width="4" height="12" x="2" y="9" />
                     <circle cx="4" cy="4" r="2" />
@@ -165,140 +159,136 @@ export default function Contact() {
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-xs font-semibold text-slate-500 hover:text-teal-600 dark:text-navy-450 dark:hover:text-teal-400 transition-colors"
+                  className="flex items-center space-x-2 text-ink-500 hover:text-cyan-glow transition-colors"
                 >
-                  <svg
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
                     <path d="M9 18c-4.51 2-5-2-7-2" />
                   </svg>
                   <span>GitHub</span>
                 </a>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
 
-          {/* Contact Form */}
-          <div className="lg:col-span-7">
-            <form
-              onSubmit={handleSubmit}
-              className="bg-white dark:bg-navy-900 p-8 rounded-2xl border border-slate-200/50 dark:border-navy-900 shadow-sm space-y-5 text-left"
-              noValidate
-            >
-              <AnimatePresence>
-                {status === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="p-4 bg-teal-50 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-900/50 text-teal-800 dark:text-teal-400 rounded-xl flex items-center space-x-3"
-                  >
-                    <CheckCircle className="h-5 w-5 flex-shrink-0" />
-                    <span className="text-xs font-semibold">Message sent successfully! I will reply to you within 24 hours.</span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+          {/* Form Box */}
+          <div className="lg:col-span-7 w-full">
+            <ScrollReveal direction="up" delay={0.2}>
+              <form
+                onSubmit={handleSubmit}
+                className="p-6 sm:p-8 rounded-2xl border border-ink-900 bg-ink-900/10 backdrop-blur-sm space-y-6 text-left"
+                noValidate
+              >
+                <AnimatePresence>
+                  {status === 'success' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="p-4 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-semibold flex items-center space-x-3"
+                    >
+                      <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                      <span>Message sent successfully! I will reply to you within 24 hours.</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {/* Name */}
-                <div className="space-y-1.5">
-                  <label htmlFor="name" className="text-[10px] font-bold text-slate-500 dark:text-navy-450 uppercase tracking-wide">
-                    Your Name
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Name */}
+                  <div className="space-y-1">
+                    <label htmlFor="name" className="text-[9px] font-mono font-bold text-ink-500 uppercase tracking-wider">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className={`w-full bg-transparent border-b py-2 text-xs text-white focus:outline-none focus:border-cyan-glow transition-colors ${
+                        errors.name ? 'border-danger focus:border-danger' : 'border-ink-800'
+                      }`}
+                      aria-invalid={!!errors.name}
+                    />
+                    {errors.name && <span className="text-[9px] text-danger font-mono font-semibold block">{errors.name}</span>}
+                  </div>
+
+                  {/* Email */}
+                  <div className="space-y-1">
+                    <label htmlFor="email" className="text-[9px] font-mono font-bold text-ink-500 uppercase tracking-wider">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className={`w-full bg-transparent border-b py-2 text-xs text-white focus:outline-none focus:border-cyan-glow transition-colors ${
+                        errors.email ? 'border-danger focus:border-danger' : 'border-ink-800'
+                      }`}
+                      aria-invalid={!!errors.email}
+                    />
+                    {errors.email && <span className="text-[9px] text-danger font-mono font-semibold block">{errors.email}</span>}
+                  </div>
+                </div>
+
+                {/* Subject */}
+                <div className="space-y-1">
+                  <label htmlFor="subject" className="text-[9px] font-mono font-bold text-ink-500 uppercase tracking-wider">
+                    Subject
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className={`w-full p-3 rounded-lg bg-slate-50 dark:bg-navy-950 border text-xs focus:outline-none focus:ring-2 focus:ring-teal-500 ${
-                      errors.name ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-navy-800'
+                    id="subject"
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    className={`w-full bg-transparent border-b py-2 text-xs text-white focus:outline-none focus:border-cyan-glow transition-colors ${
+                      errors.subject ? 'border-danger focus:border-danger' : 'border-ink-800'
                     }`}
-                    aria-invalid={!!errors.name}
+                    aria-invalid={!!errors.subject}
                   />
-                  {errors.name && <span className="text-[9px] text-red-500 font-semibold">{errors.name}</span>}
+                  {errors.subject && <span className="text-[9px] text-danger font-mono font-semibold block">{errors.subject}</span>}
                 </div>
 
-                {/* Email */}
-                <div className="space-y-1.5">
-                  <label htmlFor="email" className="text-[10px] font-bold text-slate-500 dark:text-navy-450 uppercase tracking-wide">
-                    Email Address
+                {/* Message */}
+                <div className="space-y-1">
+                  <label htmlFor="message" className="text-[9px] font-mono font-bold text-ink-500 uppercase tracking-wider">
+                    Message
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className={`w-full p-3 rounded-lg bg-slate-50 dark:bg-navy-950 border text-xs focus:outline-none focus:ring-2 focus:ring-teal-500 ${
-                      errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-navy-800'
+                  <textarea
+                    id="message"
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className={`w-full bg-transparent border-b py-2 text-xs text-white focus:outline-none focus:border-cyan-glow transition-colors resize-none ${
+                      errors.message ? 'border-danger focus:border-danger' : 'border-ink-800'
                     }`}
-                    aria-invalid={!!errors.email}
+                    aria-invalid={!!errors.message}
                   />
-                  {errors.email && <span className="text-[9px] text-red-500 font-semibold">{errors.email}</span>}
+                  {errors.message && <span className="text-[9px] text-danger font-mono font-semibold block">{errors.message}</span>}
                 </div>
-              </div>
 
-              {/* Subject */}
-              <div className="space-y-1.5">
-                <label htmlFor="subject" className="text-[10px] font-bold text-slate-500 dark:text-navy-450 uppercase tracking-wide">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className={`w-full p-3 rounded-lg bg-slate-50 dark:bg-navy-950 border text-xs focus:outline-none focus:ring-2 focus:ring-teal-500 ${
-                    errors.subject ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-navy-800'
-                  }`}
-                  aria-invalid={!!errors.subject}
-                />
-                {errors.subject && <span className="text-[9px] text-red-500 font-semibold">{errors.subject}</span>}
-              </div>
-
-              {/* Message */}
-              <div className="space-y-1.5">
-                <label htmlFor="message" className="text-[10px] font-bold text-slate-500 dark:text-navy-450 uppercase tracking-wide">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  rows={5}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className={`w-full p-3 rounded-lg bg-slate-50 dark:bg-navy-950 border text-xs focus:outline-none focus:ring-2 focus:ring-teal-500 ${
-                    errors.message ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-navy-800'
-                  }`}
-                  aria-invalid={!!errors.message}
-                />
-                {errors.message && <span className="text-[9px] text-red-500 font-semibold">{errors.message}</span>}
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={status === 'submitting'}
-                className="w-full flex items-center justify-center py-3 px-4 rounded-lg bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white text-xs font-semibold transition-colors duration-200 shadow disabled:bg-slate-400 cursor-pointer uppercase tracking-wider"
-              >
-                {status === 'submitting' ? (
-                  <span>Sending Message...</span>
-                ) : (
-                  <>
-                    <span>Send Message</span>
-                    <Send className="ml-2 h-3.5 w-3.5" />
-                  </>
-                )}
-              </button>
-            </form>
+                {/* Submit Container */}
+                <div className="pt-2">
+                  <MagneticButton
+                    variant="primary"
+                    className="w-full text-center"
+                    onClick={() => {}}
+                    title={status === 'submitting' ? 'Submitting message...' : 'Send message'}
+                  >
+                    {status === 'submitting' ? (
+                      <span>Sending Message...</span>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send className="ml-2 h-3.5 w-3.5" />
+                      </>
+                    )}
+                  </MagneticButton>
+                </div>
+              </form>
+            </ScrollReveal>
           </div>
         </div>
-
       </div>
     </section>
   )
