@@ -63,6 +63,22 @@ body.dark {
   @apply bg-navy-950 text-slate-200;
 }
 
+/* Global Accessible Focus Ring */
+*:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--color-teal-500) !important;
+}
+
+/* Custom animations */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 1.8s infinite ease-in-out;
+}
+
 /* Print Styles for CV rendering */
 @media print {
   body {

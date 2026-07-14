@@ -10,11 +10,11 @@ interface NavItem {
 const navItems: NavItem[] = [
   { label: 'About', href: '#about' },
   { label: 'Education', href: '#education' },
-  { label: 'Interests', href: '#interests' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Research', href: '#research' },
+  { label: 'Blog', href: '#blog' },
   { label: 'Certifications', href: '#certifications' },
   { label: 'Experience', href: '#experience' },
-  { label: 'Research', href: '#research' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -32,7 +32,7 @@ export default function Navbar() {
       }
 
       // Track active section for highlight
-      const scrollPosition = window.scrollY + 100
+      const scrollPosition = window.scrollY + 120
       for (const item of navItems) {
         const el = document.querySelector(item.href)
         if (el) {
@@ -54,7 +54,7 @@ export default function Navbar() {
     setIsOpen(false)
     const el = document.querySelector(href)
     if (el) {
-      const top = (el as HTMLElement).offsetTop - 80 // offset for sticky navbar
+      const top = (el as HTMLElement).offsetTop - 75 // offset for sticky navbar
       window.scrollTo({
         top: top,
         behavior: 'smooth',
@@ -64,11 +64,12 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 no-print ${
         scrolled
           ? 'bg-white/80 dark:bg-navy-950/80 backdrop-blur-md shadow-md border-b border-slate-200/50 dark:border-navy-900/50 py-3'
           : 'bg-transparent py-5'
       }`}
+      aria-label="Main Navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
@@ -77,10 +78,10 @@ export default function Navbar() {
             <a
               href="#about"
               onClick={(e) => handleLinkClick(e, '#about')}
-              className="text-lg md:text-xl font-display font-bold tracking-tight text-navy-900 dark:text-white hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+              className="text-lg md:text-xl font-display font-bold tracking-tight text-navy-900 dark:text-white hover:text-teal-600 dark:hover:text-teal-400 transition-colors focus-visible:ring-2"
             >
               Dr. Enosh A. Paulson
-              <span className="text-xs block font-sans font-medium text-slate-500 dark:text-navy-400">
+              <span className="text-xs block font-sans font-medium text-slate-500 dark:text-navy-450">
                 Healthcare AI & Informatics
               </span>
             </a>
@@ -93,10 +94,10 @@ export default function Navbar() {
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleLinkClick(e, item.href)}
-                className={`text-sm font-medium transition-colors hover:text-teal-600 dark:hover:text-teal-400 ${
+                className={`text-xs font-semibold uppercase tracking-wider transition-colors hover:text-teal-600 dark:hover:text-teal-400 focus-visible:ring-2 px-1 py-1.5 rounded ${
                   activeSection === item.href
-                    ? 'text-teal-600 dark:text-teal-400 font-semibold'
-                    : 'text-slate-600 dark:text-slate-300'
+                    ? 'text-teal-600 dark:text-teal-400 font-bold'
+                    : 'text-slate-500 dark:text-slate-350'
                 }`}
               >
                 {item.label}
@@ -112,8 +113,9 @@ export default function Navbar() {
             <DarkModeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-slate-500 dark:text-slate-300 hover:text-navy-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-navy-800 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-slate-500 dark:text-slate-300 hover:text-navy-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-navy-800 focus:outline-none focus-visible:ring-2 cursor-pointer"
               aria-expanded={isOpen}
+              aria-label="Toggle menu"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -130,10 +132,10 @@ export default function Navbar() {
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleLinkClick(e, item.href)}
-                className={`block px-3 py-2.5 rounded-md text-base font-medium transition-colors ${
+                className={`block px-3 py-2.5 rounded-md text-base font-semibold uppercase tracking-wider transition-colors ${
                   activeSection === item.href
-                    ? 'bg-teal-50 dark:bg-navy-900/50 text-teal-600 dark:text-teal-400 font-semibold'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-navy-900/30'
+                    ? 'bg-teal-50 dark:bg-navy-900/50 text-teal-600 dark:text-teal-400 font-bold'
+                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-navy-900/35'
                 }`}
               >
                 {item.label}
