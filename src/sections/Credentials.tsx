@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Award, ArrowUpRight, ShieldCheck } from 'lucide-react'
-import ScrollReveal from '../components/ScrollReveal'
+import { Award, ExternalLink, ShieldCheck } from 'lucide-react'
 
 interface Certification {
   title: string
@@ -54,7 +52,7 @@ export default function Credentials() {
       category: 'Informatics',
       link: 'https://jhu.edu',
       details: 'Key topics: EHR systems, medical databases (SQL), semantic terminologies (SNOMED-CT, LOINC, ICD-10), and decision support frameworks.',
-      logoColor: 'from-cyan-600 to-blue-600',
+      logoColor: 'from-sky-600 to-blue-600',
     },
   ]
 
@@ -65,92 +63,84 @@ export default function Credentials() {
   })
 
   return (
-    <section id="certifications" className="section-padding bg-void relative overflow-hidden border-t border-ink-900/60">
-      {/* Accent glow */}
-      <div className="absolute top-1/2 right-0 w-[450px] h-[450px] bg-cyan-glow/5 rounded-full blur-[140px] pointer-events-none" />
-
-      <div className="container-narrow">
-        <ScrollReveal direction="up">
-          <span className="text-section-label">05 / VALIDATIONS</span>
-          <h2 className="text-display-lg text-white mt-3 mb-16 max-w-2xl">
-            Specialized Informatics Credentials.
+    <section id="credentials" className="py-16 md:py-24 border-t border-zinc-900 bg-zinc-950/60">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+        
+        {/* Section Heading */}
+        <div className="mb-12 space-y-2">
+          <span className="text-xs font-mono text-sky-400 uppercase tracking-widest">05 / CERTIFICATIONS</span>
+          <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
+            Professional Credentials &amp; Training
           </h2>
-        </ScrollReveal>
+          <p className="text-sm text-zinc-400 max-w-xl">
+            Continuous specialized training from top global academic institutions to bridge clinical expertise with AI.
+          </p>
+        </div>
 
-        {/* Categories Underlined Toggles */}
-        <ScrollReveal direction="up" delay={0.1} className="flex flex-wrap items-center gap-6 border-b border-ink-900 pb-4 mb-12 text-left">
+        {/* Category Filters */}
+        <div className="flex flex-wrap gap-2 mb-8">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`text-xs font-mono tracking-widest uppercase pb-2 relative cursor-pointer ${
-                activeCategory === cat ? 'text-cyan-glow font-bold' : 'text-ink-500 hover:text-ink-300'
+              className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
+                activeCategory === cat
+                  ? 'bg-sky-500 text-zinc-950 font-semibold shadow-sm'
+                  : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
               }`}
             >
               {cat}
-              {activeCategory === cat && (
-                <motion.div
-                  layoutId="activeUnderline"
-                  className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-cyan-glow"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
-              )}
             </button>
           ))}
-        </ScrollReveal>
+        </div>
 
         {/* Credentials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredCerts.map((cert) => (
-              <motion.div
-                layout
-                key={cert.title}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="p-6 rounded-xl border border-ink-900 bg-ink-900/10 hover:border-cyan-glow/30 flex flex-col justify-between text-left transition-all duration-300"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`p-2.5 rounded-lg bg-gradient-to-tr ${cert.logoColor} text-white`}>
-                      <Award className="h-4.5 w-4.5" />
-                    </div>
-
-                    <div className="flex items-center text-cyan-glow text-[9px] font-mono tracking-wider space-x-1 uppercase">
-                      <ShieldCheck className="h-3.5 w-3.5" />
-                      <span>Verified</span>
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {filteredCerts.map((cert) => (
+            <div
+              key={cert.title}
+              className="p-5 rounded-2xl bg-zinc-900/50 border border-zinc-800/80 hover:border-zinc-700 transition-all flex flex-col justify-between space-y-4"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className={`p-2 rounded-lg bg-gradient-to-tr ${cert.logoColor} text-white shadow-sm`}>
+                    <Award className="h-4 w-4" />
                   </div>
+                  <div className="flex items-center space-x-1 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                    <ShieldCheck className="h-3 w-3" />
+                    <span>Verified</span>
+                  </div>
+                </div>
 
-                  <h3 className="text-xs font-mono font-bold tracking-wider text-white">
+                <div>
+                  <h3 className="text-xs font-mono text-sky-400 font-semibold">
                     {cert.issuer}
                   </h3>
-                  <h4 className="text-sm font-semibold text-ink-300 tracking-tight leading-snug mt-1.5 mb-4">
+                  <h4 className="text-sm font-bold text-white mt-1 leading-snug">
                     {cert.title}
                   </h4>
                 </div>
 
-                <div className="space-y-4 pt-3 border-t border-ink-900/60">
-                  <p className="text-xs text-ink-450 leading-relaxed font-light">
-                    {cert.details}
-                  </p>
+                <p className="text-xs text-zinc-400 leading-relaxed font-normal">
+                  {cert.details}
+                </p>
+              </div>
 
-                  <a
-                    href={cert.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-[10px] font-mono tracking-widest text-cyan-glow hover:text-cyan-300 uppercase"
-                  >
-                    <span>Verify Credential</span>
-                    <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+              <div className="pt-3 border-t border-zinc-800/60">
+                <a
+                  href={cert.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-1.5 text-xs font-mono text-zinc-400 hover:text-sky-400 transition-colors"
+                >
+                  <span>Verify Credential</span>
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
+
       </div>
     </section>
   )

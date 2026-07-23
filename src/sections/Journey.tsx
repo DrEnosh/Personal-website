@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { GraduationCap, Briefcase, Calendar, MapPin, ChevronRight, Award, BookOpen, Cpu } from 'lucide-react'
-import ScrollReveal from '../components/ScrollReveal'
+import { GraduationCap, Briefcase, Calendar, ChevronRight } from 'lucide-react'
 
 interface JourneyItem {
   id: string
@@ -18,7 +16,7 @@ interface JourneyItem {
 }
 
 export default function Journey() {
-  const [activeItem, setActiveItem] = useState<string | null>(null)
+  const [expandedId, setExpandedId] = useState<string | null>('research')
 
   const journeyList: JourneyItem[] = [
     {
@@ -27,7 +25,7 @@ export default function Journey() {
       role: 'Online MBA in Healthcare Management',
       organization: 'MAHE (Manipal Academy of Higher Education)',
       duration: '2024 - Present',
-      location: 'Manipal, India (Online)',
+      location: 'Manipal, India',
       specialization: 'Strategic Hospital Administration & Digital Transformation',
       bullets: [
         'Curriculum emphasizing healthcare marketing, financial management, operational efficiency, and digital health strategies.',
@@ -112,151 +110,111 @@ export default function Journey() {
   ]
 
   return (
-    <section id="journey" className="section-padding bg-void relative overflow-hidden border-t border-ink-900/60">
-      {/* Decorative radial blur */}
-      <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-cyan-glow/5 rounded-full blur-[140px] pointer-events-none" />
-
-      <div className="container-narrow">
-        <ScrollReveal direction="up">
-          <span className="text-section-label">02 / CHRONOLOGY</span>
-          <h2 className="text-display-lg text-white mt-3 mb-20 max-w-2xl">
-            A cohesive trajectory bridging clinical care and AI.
+    <section id="journey" className="py-16 md:py-24 border-t border-zinc-900">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+        
+        {/* Section Heading */}
+        <div className="mb-12 space-y-2">
+          <span className="text-xs font-mono text-sky-400 uppercase tracking-widest">02 / CHRONOLOGY</span>
+          <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
+            Education &amp; Work Experience
           </h2>
-        </ScrollReveal>
+          <p className="text-sm text-zinc-400 max-w-xl">
+            A continuous path combining clinical dentistry, health informatics, AI research, and management.
+          </p>
+        </div>
 
-        {/* Vertical Timeline Structure */}
-        <div className="relative border-l border-ink-900 ml-4 md:ml-1/2 space-y-16 text-left">
-          {journeyList.map((item, index) => {
-            const isLeft = index % 2 === 0
+        {/* Timeline Items */}
+        <div className="space-y-4">
+          {journeyList.map((item) => {
+            const isExpanded = expandedId === item.id
             const Icon = item.type === 'education' ? GraduationCap : Briefcase
 
             return (
-              <div key={item.id} className="relative w-full">
-                {/* Timeline node dot */}
-                <div className="absolute -left-[6px] md:left-1/2 md:-translate-x-1/2 top-2 h-3.5 w-3.5 rounded-full bg-void border-2 border-cyan-glow z-10" />
-
-                {/* Timeline Content Block */}
-                <div className={`w-full md:w-[45%] pl-8 md:pl-0 ${isLeft ? 'md:mr-auto' : 'md:ml-auto md:text-left'}`}>
-                  <ScrollReveal direction={isLeft ? 'left' : 'right'} delay={0.1}>
-                    <div
-                      onClick={() => setActiveItem(activeItem === item.id ? null : item.id)}
-                      className="p-6 rounded-xl border border-ink-900 hover:border-cyan-glow/30 bg-ink-900/20 backdrop-blur-sm cursor-pointer select-none transition-all duration-300"
-                    >
-                      {/* Meta header */}
-                      <div className="flex flex-wrap items-center gap-3 text-[10px] font-mono text-ink-500 uppercase mb-3">
-                        <span className="flex items-center gap-1 text-cyan-glow">
-                          <Icon className="h-3 w-3" />
+              <div
+                key={item.id}
+                className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 hover:border-zinc-700 transition-all overflow-hidden"
+              >
+                {/* Header Row */}
+                <div
+                  onClick={() => setExpandedId(isExpanded ? null : item.id)}
+                  className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer select-none"
+                >
+                  <div className="flex items-start space-x-3.5">
+                    <div className="p-2 rounded-lg bg-zinc-800 text-sky-400 mt-0.5 flex-shrink-0">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <div className="flex items-center space-x-2">
+                        <h3 className="text-base font-semibold text-white">
+                          {item.role}
+                        </h3>
+                        <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">
                           {item.type}
                         </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {item.duration}
-                        </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {item.location}
-                        </span>
                       </div>
-
-                      {/* Title */}
-                      <h3 className="text-md font-semibold text-white tracking-tight leading-snug">
-                        {item.role}
-                      </h3>
-                      <p className="text-xs text-ink-400 mt-1 font-medium">
+                      <p className="text-xs text-zinc-400 mt-0.5">
                         {item.organization}
                       </p>
-
-                      {item.specialization && (
-                        <p className="text-[11px] text-cyan-glow/85 font-mono mt-1">
-                          {item.specialization}
-                        </p>
-                      )}
-
-                      {/* Expand indicator */}
-                      <div className="flex items-center text-[10px] text-ink-500 font-mono mt-4 uppercase group">
-                        <span>Details</span>
-                        <ChevronRight className={`h-3.5 w-3.5 ml-1 transition-transform duration-300 ${activeItem === item.id ? 'rotate-90' : ''}`} />
-                      </div>
-
-                      {/* Details dropdown */}
-                      <AnimatePresence initial={false}>
-                        {activeItem === item.id && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: 'easeInOut' }}
-                            className="overflow-hidden mt-4 pt-4 border-t border-ink-900 space-y-4"
-                          >
-                            {/* Bullets */}
-                            <ul className="space-y-2">
-                              {item.bullets.map((bullet, idx) => (
-                                <li key={idx} className="text-xs text-ink-400 leading-relaxed list-disc list-inside">
-                                  {bullet}
-                                </li>
-                              ))}
-                            </ul>
-
-                            {/* Tech, Skills, and Outcome */}
-                            {(item.tech || item.skills || item.outcome) && (
-                              <div className="space-y-4 pt-2">
-                                {item.tech && (
-                                  <div>
-                                    <div className="text-[9px] font-mono text-ink-500 uppercase tracking-wider flex items-center mb-1">
-                                      <Cpu className="h-3 w-3 mr-1.5 text-cyan-glow" />
-                                      Stack
-                                    </div>
-                                    <div className="flex flex-wrap gap-1">
-                                      {item.tech.map((t) => (
-                                        <span key={t} className="text-[9px] font-mono px-2 py-0.5 rounded bg-ink-900 border border-ink-850 text-ink-300">
-                                          {t}
-                                        </span>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-
-                                {item.skills && (
-                                  <div>
-                                    <div className="text-[9px] font-mono text-ink-500 uppercase tracking-wider flex items-center mb-1">
-                                      <BookOpen className="h-3 w-3 mr-1.5 text-warm-400" />
-                                      Skills Gained
-                                    </div>
-                                    <div className="flex flex-wrap gap-1">
-                                      {item.skills.map((s) => (
-                                        <span key={s} className="text-[9px] font-mono px-2 py-0.5 rounded bg-ink-900 border border-ink-850 text-ink-300">
-                                          {s}
-                                        </span>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-
-                                {item.outcome && (
-                                  <div className="border-l border-cyan-glow/30 pl-3 py-1">
-                                    <div className="text-[9px] font-mono text-ink-500 uppercase tracking-wider flex items-center mb-0.5">
-                                      <Award className="h-3 w-3 mr-1.5 text-cyan-glow" />
-                                      Operational Outcome
-                                    </div>
-                                    <p className="text-xs text-white italic font-light">
-                                      "{item.outcome}"
-                                    </p>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
                     </div>
-                  </ScrollReveal>
+                  </div>
+
+                  <div className="flex items-center justify-between sm:justify-end space-x-4 text-xs text-zinc-400 font-mono">
+                    <div className="flex items-center space-x-1.5">
+                      <Calendar className="h-3.5 w-3.5 text-zinc-500" />
+                      <span>{item.duration}</span>
+                    </div>
+                    <ChevronRight className={`h-4 w-4 text-zinc-500 transition-transform ${isExpanded ? 'rotate-90 text-sky-400' : ''}`} />
+                  </div>
                 </div>
+
+                {/* Expanded Details */}
+                {isExpanded && (
+                  <div className="px-5 pb-5 pt-2 border-t border-zinc-800/60 space-y-4 text-xs text-zinc-300">
+                    {item.specialization && (
+                      <p className="font-mono text-sky-400 text-xs">
+                        Focus: {item.specialization}
+                      </p>
+                    )}
+
+                    <ul className="space-y-2">
+                      {item.bullets.map((bullet, idx) => (
+                        <li key={idx} className="flex items-start space-x-2 text-zinc-300 leading-relaxed">
+                          <span className="text-sky-400 font-bold">•</span>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Tech & Outcome */}
+                    {(item.tech || item.skills || item.outcome) && (
+                      <div className="pt-3 border-t border-zinc-800/40 space-y-3">
+                        {item.tech && (
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <span className="text-[10px] font-mono text-zinc-500 uppercase mr-1">Stack:</span>
+                            {item.tech.map((t) => (
+                              <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-300">
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {item.outcome && (
+                          <div className="p-3 rounded-lg bg-zinc-950/60 border border-zinc-800/60 text-xs text-zinc-300 italic">
+                            <span className="font-semibold text-sky-400 not-italic mr-1.5">Key Outcome:</span>
+                            "{item.outcome}"
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             )
           })}
         </div>
+
       </div>
     </section>
   )

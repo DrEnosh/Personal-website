@@ -1,9 +1,8 @@
 import React, { Suspense } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import SectionDivider from './components/SectionDivider'
 
-// Lazy loaded sections for code splitting and bundle optimization
+// Lazy loaded sections for high-performance chunk loading
 const Hero = React.lazy(() => import('./sections/Hero'))
 const About = React.lazy(() => import('./sections/About'))
 const Journey = React.lazy(() => import('./sections/Journey'))
@@ -14,50 +13,35 @@ const Contact = React.lazy(() => import('./sections/Contact'))
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-void text-ink-200 transition-colors duration-300 antialiased selection:bg-cyan-glow/20 selection:text-white">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-sky-500/20 selection:text-sky-200">
       
       {/* Accessibility: Skip to Content link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-cyan-glow text-ink-950 px-4 py-2 rounded-lg font-mono text-[10px] uppercase font-bold z-50 no-print"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-sky-500 text-zinc-950 px-4 py-2 rounded-lg font-mono text-xs font-bold z-50 no-print"
       >
         Skip to Content
       </a>
 
-      {/* Sticky Header Navigation */}
+      {/* Header Navigation */}
       <Navbar />
 
-      {/* Main content elements */}
-      <main id="main-content" className="relative">
+      {/* Main Content */}
+      <main id="main-content">
         <Suspense fallback={
-          <div className="min-h-screen flex items-center justify-center bg-void">
-            <div className="flex flex-col items-center space-y-4">
-              {/* Spinner */}
-              <div className="h-6 w-6 border-2 border-cyan-glow border-t-transparent rounded-full animate-spin" />
-              <span className="text-[9px] font-mono font-bold text-ink-500 uppercase tracking-widest animate-pulse">
-                Initializing Narrative...
-              </span>
+          <div className="min-h-screen flex items-center justify-center bg-zinc-950">
+            <div className="flex items-center space-x-3">
+              <div className="h-5 w-5 border-2 border-sky-400 border-t-transparent rounded-full animate-spin" />
+              <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest">Loading...</span>
             </div>
           </div>
         }>
           <Hero />
-          
-          <SectionDivider label="Perspective" />
           <About />
-          
-          <SectionDivider label="Chronology" />
           <Journey />
-          
-          <SectionDivider label="Case Studies" />
           <Projects />
-          
-          <SectionDivider label="Scholarship" />
           <Research />
-          
-          <SectionDivider label="Validations" />
           <Credentials />
-          
-          <SectionDivider label="Connection" />
           <Contact />
         </Suspense>
       </main>
