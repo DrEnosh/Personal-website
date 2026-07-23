@@ -11,16 +11,13 @@ export default function NeuralCanvas() {
     if (!ctx) return
 
     let animationFrameId: number
-    let width = (canvas.width = window.innerWidth)
-    let height = (canvas.height = window.innerHeight)
+    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth)
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 500)
 
     const particles: Particle[] = []
-    const connectionDistance = 120
-    const maxParticles = Math.min(Math.floor((width * height) / 15000), 80) // responsive count
+    const connectionDistance = 140
+    const particleCount = Math.min(Math.floor((width * height) / 12000), 70)
     const mouse = { x: -1000, y: -1000, active: false }
-
-    // Check for reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     class Particle {
       x: number
@@ -28,34 +25,35 @@ export default function NeuralCanvas() {
       vx: number
       vy: number
       radius: number
+      baseAlpha: number
+      color: string
 
       constructor() {
         this.x = Math.random() * width
         this.y = Math.random() * height
-        // Slower velocities for a calm, professional breathing effect
-        this.vx = (Math.random() - 0.5) * 0.4
-        this.vy = (Math.random() - 0.5) * 0.4
-        this.radius = Math.random() * 1.5 + 1
+        this.vx = (Math.random() - 0.5) * 0.6
+        this.vy = (Math.random() - 0.5) * 0.6
+        this.radius = Math.random() * 2 + 1
+        this.baseAlpha = Math.random() * 0.5 + 0.3
+        // Alternating Sky Blue and Emerald Medical AI glow nodes
+        this.color = Math.random() > 0.3 ? '56, 189, 248' : '45, 212, 191'
       }
 
       update() {
-        if (prefersReducedMotion) return
-
         this.x += this.vx
         this.y += this.vy
 
-        // Bounce borders
         if (this.x < 0 || this.x > width) this.vx *= -1
         if (this.y < 0 || this.y > height) this.vy *= -1
 
-        // Mouse proximity interaction (subtle attraction)
+        // Mouse attraction physics
         if (mouse.active) {
           const dx = mouse.x - this.x
           const dy = mouse.y - this.y
           const dist = Math.hypot(dx, dy)
-          if (dist < 200) {
-            this.x += dx * 0.005
-            this.y += dy * 0.005
+          if (dist < 180) {
+            this.x += dx * 0.01
+            this.y += dy * 0.01
           }
         }
       }
@@ -64,13 +62,15 @@ export default function NeuralCanvas() {
         if (!ctx) return
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(0, 212, 255, 0.45)'
+        ctx.fillStyle = `rgba(${this.color}, ${this.baseAlpha})`
+        ctx.shadowBlur = 12
+        ctx.shadowColor = `rgba(${this.color}, 0.8)`
         ctx.fill()
+        ctx.shadowBlur = 0
       }
     }
 
-    // Initialize particles
-    for (let i = 0; i < maxParticles; i++) {
+    for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle())
     }
 
@@ -82,11 +82,11 @@ export default function NeuralCanvas() {
           const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y)
 
           if (dist < connectionDistance) {
-            const alpha = (1 - dist / connectionDistance) * 0.08
+            const alpha = (1 - dist / connectionDistance) * 0.18
             ctx.beginPath()
             ctx.moveTo(p1.x, p1.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(0, 212, 255, ${alpha})`
+            ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`
             ctx.lineWidth = 0.8
             ctx.stroke()
           }
@@ -108,14 +108,15 @@ export default function NeuralCanvas() {
     }
 
     const handleResize = () => {
-      if (!canvas) return
-      width = canvas.width = window.innerWidth
-      height = canvas.height = window.innerHeight
+      if (!canvas || !canvas.parentElement) return
+      width = canvas.width = canvas.parentElement.clientWidth
+      height = canvas.height = canvas.parentElement.clientHeight
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX
-      mouse.y = e.clientY
+      const rect = canvas.getBoundingClientRect()
+      mouse.x = e.clientX - rect.left
+      mouse.y = e.clientY - rect.top
       mouse.active = true
     }
 
@@ -124,15 +125,20 @@ export default function NeuralCanvas() {
     }
 
     window.addEventListener('resize', handleResize)
-    window.addEventListener('mousemove', handleMouseMove)
-    document.body.addEventListener('mouseleave', handleMouseLeave)
+    const parent = canvas.parentElement
+    if (parent) {
+      parent.addEventListener('mousemove', handleMouseMove)
+      parent.addEventListener('mouseleave', handleMouseLeave)
+    }
 
     render()
 
     return () => {
       window.removeEventListener('resize', handleResize)
-      window.removeEventListener('mousemove', handleMouseMove)
-      document.body.removeEventListener('mouseleave', handleMouseLeave)
+      if (parent) {
+        parent.removeEventListener('mousemove', handleMouseMove)
+        parent.removeEventListener('mouseleave', handleMouseLeave)
+      }
       cancelAnimationFrame(animationFrameId)
     }
   }, [])
@@ -140,7 +146,7 @@ export default function NeuralCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none w-full h-full -z-20 block opacity-60 dark:opacity-85"
+      className="absolute inset-0 pointer-events-none w-full h-full -z-10 opacity-75"
       aria-hidden="true"
     />
   )

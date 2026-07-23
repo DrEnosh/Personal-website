@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { ExternalLink, ArrowUpRight, X, Cpu, Target, Award } from 'lucide-react'
+import { ExternalLink, ArrowUpRight, X, Cpu, Target, Award, Activity, CheckCircle2, ScanLine, FileCode } from 'lucide-react'
 
 interface Project {
+  id: string
   title: string
   tagline: string
   problem: string
@@ -25,6 +26,7 @@ export default function Projects() {
 
   const projectsList: Project[] = [
     {
+      id: 'unet-wound',
       title: 'Wound Segmentation using U-Net',
       tagline: 'Computer Vision in Clinical Wound Care',
       problem: 'Chronic wound assessment in outpatient clinics is highly subjective and depends on manual ruler tracing, introducing inter-clinician variance and delaying diagnostic interventions.',
@@ -51,6 +53,7 @@ export default function Projects() {
       }
     },
     {
+      id: 'dentohub',
       title: 'DentoHub',
       tagline: 'Dental EHR & Clinical Decision Support System',
       problem: 'Dental practitioners operate on isolated charting tools that lack clinical decision overlays, leaving potential caries or periodontal trends undetected during routine diagnostic checks.',
@@ -77,6 +80,7 @@ export default function Projects() {
       }
     },
     {
+      id: 'mental-health',
       title: 'Mental Health Dashboard',
       tagline: 'Outpatient Visual Analytics & Demographics Mapping',
       problem: 'Clinic managers lack direct visual insight into medication compliance, symptom trends, and recovery response correlations, making staff planning and pharmaceutical inventory allocations inefficient.',
@@ -103,6 +107,7 @@ export default function Projects() {
       }
     },
     {
+      id: 'future-ai',
       title: 'Future Healthcare AI Projects',
       tagline: 'Clinical Agents & Automatic Coding',
       problem: 'Clinicians spend up to 40% of their working day writing summaries and inputting diagnostic codes, leading to physician burnout and administrative overhead.',
@@ -151,7 +156,7 @@ export default function Projects() {
         <div className="mb-12 space-y-2">
           <span className="text-xs font-mono text-sky-400 uppercase tracking-widest">03 / PORTFOLIO</span>
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
-            Featured Projects &amp; Case Studies
+            Featured Projects &amp; Medical AI Graphics
           </h2>
           <p className="text-sm text-zinc-400 max-w-xl">
             Translating biomedical informatics concepts and clinical insights into working AI software solutions.
@@ -163,9 +168,9 @@ export default function Projects() {
           {projectsList.map((project) => (
             <div
               key={project.title}
-              className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800/80 hover:border-zinc-700 transition-all flex flex-col justify-between space-y-5"
+              className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800/80 hover:border-sky-500/40 transition-all flex flex-col justify-between space-y-5 group hover:shadow-[0_0_30px_rgba(56,189,248,0.1)]"
             >
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${getStatusBadge(project.status)}`}>
                     {project.status}
@@ -179,8 +184,101 @@ export default function Projects() {
                   </button>
                 </div>
 
+                {/* Interactive Graphic UI Mockup Box */}
+                <div className="relative h-36 rounded-xl bg-zinc-950 border border-zinc-800/80 overflow-hidden p-3.5 flex flex-col justify-between group-hover:border-zinc-700 transition-colors">
+                  {project.id === 'unet-wound' && (
+                    <>
+                      <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                        <span className="flex items-center gap-1.5 text-sky-400">
+                          <ScanLine className="h-3.5 w-3.5 animate-pulse" />
+                          U-NET SEGMENTATION MASK
+                        </span>
+                        <span className="text-emerald-400 font-bold">IoU: 0.895</span>
+                      </div>
+                      <div className="relative w-full h-16 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-center overflow-hidden">
+                        {/* Scanning Laser Line */}
+                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-sky-400 animate-[bounce_2s_infinite]" />
+                        <div className="w-20 h-10 rounded-full border-2 border-dashed border-sky-400/80 bg-sky-500/10 flex items-center justify-center">
+                          <span className="text-[9px] font-mono text-sky-300 font-bold">WOUND MASK</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between text-[9px] font-mono text-zinc-500">
+                        <span>CLAHE Pre-processed</span>
+                        <span>ResNet-34 Encoder</span>
+                      </div>
+                    </>
+                  )}
+
+                  {project.id === 'dentohub' && (
+                    <>
+                      <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                        <span className="flex items-center gap-1.5 text-teal-400">
+                          <Activity className="h-3.5 w-3.5" />
+                          DENTAL EDR &bull; FDI SCHEMAS
+                        </span>
+                        <span className="text-teal-400 font-bold">HL7 FHIR API</span>
+                      </div>
+                      <div className="grid grid-cols-8 gap-1 py-1">
+                        {[11, 12, 13, 14, 21, 22, 23, 24].map((t, idx) => (
+                          <div key={t} className={`h-8 rounded bg-zinc-900 border flex flex-col items-center justify-center text-[8px] font-mono ${idx % 3 === 0 ? 'border-teal-500/50 text-teal-300' : 'border-zinc-800 text-zinc-500'}`}>
+                            <span>{t}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex justify-between text-[9px] font-mono text-zinc-500">
+                        <span>Real-time Risk Alert</span>
+                        <span>FastAPI Engine</span>
+                      </div>
+                    </>
+                  )}
+
+                  {project.id === 'mental-health' && (
+                    <>
+                      <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                        <span className="flex items-center gap-1.5 text-amber-400">
+                          <Activity className="h-3.5 w-3.5" />
+                          POWER BI ANALYTICS DASHBOARD
+                        </span>
+                        <span className="text-amber-400 font-bold">+20% Compliance</span>
+                      </div>
+                      <div className="h-14 flex items-end justify-between px-2 gap-1.5 pt-2">
+                        {[30, 45, 60, 50, 75, 90, 85, 95].map((val, idx) => (
+                          <div key={idx} className="w-full bg-amber-500/20 rounded-t border-t border-amber-400" style={{ height: `${val}%` }} />
+                        ))}
+                      </div>
+                      <div className="flex justify-between text-[9px] font-mono text-zinc-500">
+                        <span>DAX Analytics</span>
+                        <span>SQL Star Schema</span>
+                      </div>
+                    </>
+                  )}
+
+                  {project.id === 'future-ai' && (
+                    <>
+                      <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                        <span className="flex items-center gap-1.5 text-purple-400">
+                          <FileCode className="h-3.5 w-3.5" />
+                          CLINICAL RAG AGENT &bull; WHISPER
+                        </span>
+                        <span className="text-purple-400 font-bold">CDT / ICD-10</span>
+                      </div>
+                      <div className="p-2 rounded bg-zinc-900/90 border border-purple-500/20 text-[9px] font-mono text-purple-300 space-y-1">
+                        <div className="flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                          <span>Doctor-patient dialogue transcribed</span>
+                        </div>
+                        <div className="text-zinc-500 truncate">&gt; Auto-mapping CDT code #D0120 (Periodic Evaluation)</div>
+                      </div>
+                      <div className="flex justify-between text-[9px] font-mono text-zinc-500">
+                        <span>ChromaDB Vector RAG</span>
+                        <span>LangChain Routing</span>
+                      </div>
+                    </>
+                  )}
+                </div>
+
                 <div>
-                  <h3 className="text-lg font-bold text-white tracking-tight">
+                  <h3 className="text-lg font-bold text-white tracking-tight group-hover:text-sky-300 transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-xs font-mono text-zinc-400 mt-0.5">
@@ -188,11 +286,11 @@ export default function Projects() {
                   </p>
                 </div>
 
-                <p className="text-xs text-zinc-300 leading-relaxed line-clamp-3">
+                <p className="text-xs text-zinc-300 leading-relaxed line-clamp-2">
                   <strong className="text-white font-medium">Problem:</strong> {project.problem}
                 </p>
 
-                <p className="text-xs text-zinc-400 leading-relaxed line-clamp-3">
+                <p className="text-xs text-zinc-400 leading-relaxed line-clamp-2">
                   <strong className="text-zinc-300 font-medium">Solution:</strong> {project.solution}
                 </p>
               </div>
@@ -209,7 +307,7 @@ export default function Projects() {
                 <div className="flex items-center justify-between text-xs pt-1">
                   <button
                     onClick={() => setSelectedProject(project)}
-                    className="px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs transition-colors cursor-pointer"
                   >
                     View Details
                   </button>
@@ -247,7 +345,7 @@ export default function Projects() {
 
       {/* Case Study Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="relative w-full max-w-3xl bg-zinc-950 border border-zinc-800 rounded-2xl p-6 sm:p-8 space-y-6 text-left shadow-2xl">
             <button
               onClick={() => setSelectedProject(null)}

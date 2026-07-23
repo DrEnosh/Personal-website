@@ -1,5 +1,6 @@
-import { ArrowRight, Download, Mail } from 'lucide-react'
+import { ArrowRight, Download, Mail, Activity, Cpu, ShieldCheck, Zap } from 'lucide-react'
 import headshot from '../assets/headshot.png'
+import NeuralCanvas from '../components/NeuralCanvas'
 
 export default function Hero() {
   const scrollToSection = (id: string) => {
@@ -18,23 +19,27 @@ export default function Hero() {
   ]
 
   return (
-    <section id="about" className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
-      {/* Background Subtle Gradient Blobs */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-sky-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+    <section id="about" className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-zinc-950">
+      
+      {/* Antigravity Neural Canvas Background */}
+      <NeuralCanvas />
+
+      {/* Decorative Radial Ambient Glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-sky-500/15 via-teal-500/10 to-indigo-500/15 rounded-full blur-[150px] pointer-events-none -z-10" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Main Text Area */}
+          {/* Text Area */}
           <div className="lg:col-span-8 space-y-6">
             
-            {/* Status Badge */}
-            <div className="inline-flex items-center space-x-2 bg-zinc-900/80 border border-zinc-800 px-3.5 py-1.5 rounded-full text-xs font-mono text-zinc-300">
+            {/* Live Telemetry Status Pill */}
+            <div className="inline-flex items-center space-x-2.5 bg-zinc-900/90 border border-sky-500/30 px-4 py-1.5 rounded-full text-xs font-mono text-zinc-200 backdrop-blur-md shadow-[0_0_20px_rgba(56,189,248,0.15)]">
               <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
               </span>
-              <span>Available for Healthcare AI &amp; Informatics Roles</span>
+              <span className="text-sky-300 font-semibold">HEALTHCARE AI &amp; MEDICAL INFORMATICS</span>
             </div>
 
             {/* Main Headline */}
@@ -42,8 +47,9 @@ export default function Hero() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-white leading-tight">
                 Dr. Enosh A Paulson
               </h1>
-              <p className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
-                BDS | PGDMI (AI &amp; Data Science in Healthcare)
+              <p className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent flex items-center gap-2">
+                <SparklesIcon className="h-5 w-5 text-sky-400 inline" />
+                <span>BDS | PGDMI (AI &amp; Data Science in Healthcare)</span>
               </p>
             </div>
 
@@ -52,27 +58,27 @@ export default function Hero() {
               Translating clinical realities into medical intelligence. Leveraging a clinical dentistry background combined with biomedical data science to design, build, and audit AI systems for hospitals, diagnostics, and health platforms.
             </p>
 
-            {/* Call to Actions */}
+            {/* Buttons */}
             <div className="flex flex-wrap gap-3 pt-2">
               <button
                 onClick={() => scrollToSection('#projects')}
-                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-zinc-950 font-semibold text-sm transition-all shadow-md shadow-sky-500/20 cursor-pointer"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-zinc-950 font-bold text-sm transition-all shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:-translate-y-0.5 cursor-pointer"
               >
-                <span>View Projects</span>
+                <span>View AI Projects</span>
                 <ArrowRight className="h-4 w-4" />
               </button>
 
               <button
                 onClick={() => scrollToSection('#contact')}
-                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-white font-medium text-sm transition-all cursor-pointer"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-white font-semibold text-sm transition-all hover:border-zinc-700 cursor-pointer backdrop-blur-md"
               >
-                <Mail className="h-4 w-4 text-zinc-400" />
+                <Mail className="h-4 w-4 text-sky-400" />
                 <span>Contact Me</span>
               </button>
 
               <button
                 onClick={() => window.print()}
-                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-medium text-sm transition-all cursor-pointer"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-sm transition-all hover:border-zinc-700 cursor-pointer backdrop-blur-md"
               >
                 <Download className="h-4 w-4 text-zinc-400" />
                 <span>Print CV</span>
@@ -111,24 +117,30 @@ export default function Hero() {
 
           </div>
 
-          {/* Profile Headshot Card */}
+          {/* Graphic Profile Headshot with Antigravity Glow Rings */}
           <div className="lg:col-span-4 flex justify-center">
             <div className="relative group w-64 h-64 sm:w-72 sm:h-72">
-              {/* Outer Glow */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-sky-500/20 to-teal-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+              
+              {/* Antigravity Orbiting Rings */}
+              <div className="absolute -inset-4 rounded-full border border-sky-500/20 animate-[spin_12s_linear_infinite] pointer-events-none" />
+              <div className="absolute -inset-8 rounded-full border border-teal-500/10 animate-[spin_20s_linear_infinite_reverse] pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-sky-500/25 via-teal-500/20 to-indigo-500/25 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
               
               {/* Card Container */}
-              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 p-2 shadow-2xl">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-zinc-800/90 bg-zinc-900/90 p-2 shadow-2xl backdrop-blur-md">
                 <img
                   src={headshot}
                   alt="Dr. Enosh A Paulson"
                   className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
                 />
                 
-                {/* Overlay Badge */}
-                <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg bg-zinc-950/85 backdrop-blur-md border border-zinc-800/80 flex items-center space-x-2 text-xs">
-                  <div className="h-2 w-2 rounded-full bg-sky-400 animate-pulse" />
-                  <span className="text-zinc-200 font-medium truncate">Bangalore, India &bull; Clinical AI</span>
+                {/* Antigravity Graphic Telemetry Overlay */}
+                <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-zinc-950/90 backdrop-blur-md border border-sky-500/30 flex items-center justify-between text-xs shadow-lg">
+                  <div className="flex items-center space-x-2">
+                    <Activity className="h-3.5 w-3.5 text-sky-400 animate-pulse" />
+                    <span className="text-zinc-200 font-medium text-[11px]">Bangalore, IN &bull; Clinical AI</span>
+                  </div>
+                  <span className="text-[10px] font-mono text-sky-400 font-bold px-1.5 py-0.5 rounded bg-sky-500/10">0.895 IoU</span>
                 </div>
               </div>
             </div>
@@ -136,12 +148,18 @@ export default function Hero() {
 
         </div>
 
-        {/* Stats Grid */}
+        {/* Dynamic Graphic Statistics Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-10 border-t border-zinc-900">
-          {stats.map((stat) => (
-            <div key={stat.label} className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/60">
-              <div className="text-2xl sm:text-3xl font-bold font-display text-white">
-                {stat.value}
+          {stats.map((stat, idx) => (
+            <div key={stat.label} className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 hover:border-sky-500/40 transition-all hover:bg-zinc-900/70 group">
+              <div className="flex items-center justify-between">
+                <div className="text-2xl sm:text-3xl font-bold font-display text-white group-hover:text-sky-300 transition-colors">
+                  {stat.value}
+                </div>
+                {idx === 0 && <Cpu className="h-4 w-4 text-sky-400" />}
+                {idx === 1 && <ShieldCheck className="h-4 w-4 text-emerald-400" />}
+                {idx === 2 && <Zap className="h-4 w-4 text-amber-400" />}
+                {idx === 3 && <Activity className="h-4 w-4 text-teal-400" />}
               </div>
               <div className="text-xs font-semibold text-sky-400 mt-1">
                 {stat.label}
@@ -155,5 +173,13 @@ export default function Hero() {
 
       </div>
     </section>
+  )
+}
+
+function SparklesIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+    </svg>
   )
 }
